@@ -1,0 +1,631 @@
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduLearn - Plateforme d'Apprentissage</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        /* Header & Navigation */
+        .navbar {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #666;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #667eea;
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+            margin-bottom: 3rem;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 2rem;
+        }
+
+        /* Categories */
+        .categories {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .category-btn {
+            padding: 0.5rem 1.5rem;
+            border: none;
+            background: #f0f0f0;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .category-btn.active {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .category-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Courses Grid */
+        .courses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .course-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+
+        .course-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .course-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            color: white;
+        }
+
+        .course-content {
+            padding: 1.5rem;
+        }
+
+        .course-title {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+
+        .course-description {
+            color: #666;
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+
+        .course-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid #eee;
+        }
+
+        .course-duration {
+            color: #667eea;
+            font-weight: 500;
+        }
+
+        .course-level {
+            background: #f0f0f0;
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+            font-size: 0.85rem;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 20px;
+            max-width: 800px;
+            width: 90%;
+            max-height: 85vh;
+            overflow-y: auto;
+            position: relative;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .modal-header {
+            padding: 2rem;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .modal-body {
+            padding: 2rem;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 1rem;
+            right: 1.5rem;
+            font-size: 2rem;
+            cursor: pointer;
+            color: white;
+            transition: transform 0.3s;
+        }
+
+        .close-modal:hover {
+            transform: scale(1.1);
+        }
+
+        .lesson-list {
+            list-style: none;
+            margin-top: 1rem;
+        }
+
+        .lesson-item {
+            padding: 1rem;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .lesson-item:hover {
+            background: #f9f9f9;
+        }
+
+        .lesson-checkbox {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        .lesson-title {
+            flex: 1;
+            font-weight: 500;
+        }
+
+        .progress-bar {
+            background: #f0f0f0;
+            height: 10px;
+            border-radius: 5px;
+            overflow: hidden;
+            margin: 1rem 0;
+        }
+
+        .progress-fill {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            height: 100%;
+            width: 0%;
+            transition: width 0.3s;
+        }
+
+        /* Dashboard */
+        .dashboard {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            padding: 1.5rem;
+            border-radius: 15px;
+            text-align: center;
+            color: white;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        /* Forms */
+        .add-course-form {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            font-family: inherit;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: transform 0.3s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+            
+            .courses-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <i class="fas fa-graduation-cap"></i> EduLearn
+            </div>
+            <ul class="nav-links">
+                <li><a href="#" onclick="showSection('home')">Accueil</a></li>
+                <li><a href="#" onclick="showSection('courses')">Cours</a></li>
+                <li><a href="#" onclick="showSection('dashboard')">Mon Progrès</a></li>
+                <li><a href="#" onclick="showSection('add-course')">Ajouter un Cours</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- Home Section -->
+        <div id="home-section">
+            <div class="hero">
+                <h1>Bienvenue sur EduLearn</h1>
+                <p>Apprenez à votre rythme avec nos cours interactifs et de qualité</p>
+                <button class="btn" onclick="showSection('courses')">Commencer l'apprentissage</button>
+            </div>
+
+            <div class="stats">
+                <div class="stat-card">
+                    <div class="stat-number" id="total-courses">0</div>
+                    <div class="stat-label">Cours disponibles</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="total-lessons">0</div>
+                    <div class="stat-label">Leçons totales</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="completed-courses">0</div>
+                    <div class="stat-label">Cours complétés</div>
+                </div>
+            </div>
+
+            <h2 style="margin: 2rem 0 1rem; color: white;">Cours populaires</h2>
+            <div id="featured-courses" class="courses-grid"></div>
+        </div>
+
+        <!-- Courses Section -->
+        <div id="courses-section" style="display: none;">
+            <div class="hero">
+                <h1>Nos Cours</h1>
+                <p>Choisissez le cours qui correspond à vos objectifs</p>
+            </div>
+            
+            <div class="categories">
+                <button class="category-btn active" onclick="filterCourses('all')">Tous</button>
+                <button class="category-btn" onclick="filterCourses('programming')">Programmation</button>
+                <button class="category-btn" onclick="filterCourses('design')">Design</button>
+                <button class="category-btn" onclick="filterCourses('business')">Business</button>
+                <button class="category-btn" onclick="filterCourses('marketing')">Marketing</button>
+            </div>
+
+            <div id="courses-list" class="courses-grid"></div>
+        </div>
+
+        <!-- Dashboard Section -->
+        <div id="dashboard-section" style="display: none;">
+            <div class="hero">
+                <h1>Mon Tableau de Bord</h1>
+                <p>Suivez votre progression d'apprentissage</p>
+            </div>
+
+            <div class="dashboard">
+                <h2>Mes cours en cours</h2>
+                <div id="in-progress-courses"></div>
+                
+                <h2 style="margin-top: 2rem;">Cours complétés</h2>
+                <div id="completed-courses-list"></div>
+            </div>
+        </div>
+
+        <!-- Add Course Section -->
+        <div id="add-course-section" style="display: none;">
+            <div class="hero">
+                <h1>Ajouter un Nouveau Cours</h1>
+                <p>Partagez vos connaissances avec la communauté</p>
+            </div>
+
+            <div class="add-course-form">
+                <form id="course-form">
+                    <div class="form-group">
+                        <label>Titre du cours *</label>
+                        <input type="text" id="course-title" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Description *</label>
+                        <textarea id="course-description" rows="3" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Catégorie *</label>
+                        <select id="course-category">
+                            <option value="programming">Programmation</option>
+                            <option value="design">Design</option>
+                            <option value="business">Business</option>
+                            <option value="marketing">Marketing</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Niveau *</label>
+                        <select id="course-level">
+                            <option value="Débutant">Débutant</option>
+                            <option value="Intermédiaire">Intermédiaire</option>
+                            <option value="Avancé">Avancé</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Durée (en heures) *</label>
+                        <input type="number" id="course-duration" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Icone (Font Awesome) *</label>
+                        <input type="text" id="course-icon" value="fas fa-code" placeholder="ex: fas fa-code">
+                    </div>
+                    <div class="form-group">
+                        <label>Leçons (une par ligne)</label>
+                        <textarea id="course-lessons" rows="5" placeholder="Introduction&#10;Chapitre 1&#10;Chapitre 2&#10;Exercices&#10;Quiz final"></textarea>
+                    </div>
+                    <button type="submit" class="btn">Ajouter le cours</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Course Modal -->
+    <div id="course-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal()">&times;</span>
+            <div class="modal-header">
+                <h2 id="modal-title"></h2>
+                <p id="modal-description"></p>
+            </div>
+            <div class="modal-body">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="modal-progress"></div>
+                </div>
+                <h3>Leçons</h3>
+                <ul id="modal-lessons" class="lesson-list"></ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Données initiales
+        let courses = [
+            {
+                id: 1,
+                title: "JavaScript Moderne",
+                description: "Maîtrisez JavaScript ES6+ avec des projets pratiques",
+                category: "programming",
+                level: "Intermédiaire",
+                duration: 12,
+                icon: "fab fa-js",
+                lessons: ["Introduction à JavaScript", "Variables et Types", "Fonctions", "Objets et Classes", "Promesses et Async/Await", "Projet Final"],
+                completedLessons: []
+            },
+            {
+                id: 2,
+                title: "UI/UX Design",
+                description: "Apprenez les principes du design d'interface utilisateur",
+                category: "design",
+                level: "Débutant",
+                duration: 8,
+                icon: "fas fa-palette",
+                lessons: ["Introduction au Design", "Couleurs et Typographie", "Wireframing", "Prototypage", "Tests Utilisateurs", "Portfolio"],
+                completedLessons: []
+            },
+            {
+                id: 3,
+                title: "Marketing Digital",
+                description: "Stratégies marketing pour réussir en ligne",
+                category: "marketing",
+                level: "Débutant",
+                duration: 10,
+                icon: "fas fa-chart-line",
+                lessons: ["Fondamentaux du Marketing", "SEO", "Réseaux Sociaux", "Email Marketing", "Analytics", "Stratégie de Contenu"],
+                completedLessons: []
+            }
+        ];
+
+        let currentFilter = "all";
+
+        // Sauvegarder les données dans localStorage
+        function saveData() {
+            localStorage.setItem('learningCourses', JSON.stringify(courses));
+        }
+
+        // Charger les données
+        function loadData() {
+            const saved = localStorage.getItem('learningCourses');
+            if (saved) {
+                courses = JSON.parse(saved);
+            }
+            updateStats();
+        }
+
+        // Mettre à jour les statistiques
+        function updateStats() {
+            const totalCourses = courses.length;
+            const totalLessons = courses.reduce((sum, course) => sum + course.lessons.length, 0);
+            const completedCourses = courses.filter(course => 
+                course.completedLessons && course.completedLessons.length === course.lessons.length
+            ).length;
+            
+            document.getElementById('total-courses').textContent = totalCourses;
+            document.getElementById('total-lessons').textContent = totalLessons;
+            document.getElementById('completed-courses').textContent = completedCourses;
+        }
+
+        // Afficher les cours
+        function displayCourses(containerId, filter = null) {
+            let filteredCourses = courses;
+            if (filter && filter !== 'all') {
+                filteredCourses = courses.filter(course => course.category === filter);
+            }
+            
+            const container = document.getElementById(containerId);
+            if (!container) return;
+            
+            container.innerHTML = filteredCourses.map(course => `
+                <div class="course-card" onclick="openCourseModal(${course.id})">
+                    <div class="course-image">
+                        <i class="${course.icon}"></i>
+                    </div>
+                    <div class="course-content">
+                        <h3 class="course-title">${course.title}</h3>
+                        <p class="course-description">${course.description}</p>
+                        <div class="course-meta">
+                            <span class="course-duration"><i class="fas fa-clock"></i> ${course.duration}h</span>
+                            <span class="course-level">${course.level}</span>
+                        </div>
