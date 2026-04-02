@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>ISTQB® CTFL v4.0 - E-Learning complet & Quiz</title>
+    <title>ISTQB e-Learning | Préparation Certifiée Niveau Fondation v4.0</title>
     <style>
         * {
             margin: 0;
@@ -12,575 +12,533 @@
         }
 
         body {
-            background: #0B0E17;
-            font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
-            color: #E2E8F0;
+            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            background: #0a0c10;
+            color: #eef2ff;
             line-height: 1.5;
+            scroll-behavior: smooth;
         }
 
-        ::-webkit-scrollbar { width: 8px; height: 8px; }
-        ::-webkit-scrollbar-track { background: #1A1F2E; border-radius: 10px; }
-        ::-webkit-scrollbar-thumb { background: #3B4259; border-radius: 10px; }
-
+        /* Layout principal */
         .app-container {
             display: flex;
-            flex-direction: column;
             min-height: 100vh;
         }
 
-        .header {
-            background: linear-gradient(135deg, #0F111A 0%, #121625 100%);
-            border-bottom: 1px solid #262D44;
-            padding: 1.2rem 2rem;
+        /* SIDEBAR sombre épurée */
+        .sidebar {
+            width: 280px;
+            background: #111316;
+            border-right: 1px solid #2a2f3a;
             position: sticky;
             top: 0;
-            z-index: 100;
-        }
-        .header h1 {
-            font-size: 1.8rem;
-            font-weight: 700;
-            background: linear-gradient(135deg, #C0F2FF, #8AADFF);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-        .header p {
-            font-size: 0.85rem;
-            color: #8E9BC2;
-            margin-top: 6px;
+            height: 100vh;
+            overflow-y: auto;
+            z-index: 10;
+            transition: all 0.2s;
         }
 
-        .nav-bar {
-            background: #0E1119;
-            border-bottom: 1px solid #262D44;
-            padding: 0;
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
+        .sidebar-header {
+            padding: 1.75rem 1.5rem;
+            border-bottom: 1px solid #2a2f3a;
         }
-        .nav-menu {
-            display: flex;
-            flex-wrap: nowrap;
-            list-style: none;
-            gap: 0;
-            padding: 0;
-            margin: 0;
-            min-width: max-content;
-        }
-        .nav-item {
-            position: relative;
-        }
-        .nav-link {
-            display: inline-block;
-            padding: 0.9rem 1.3rem;
+
+        .sidebar-header h2 {
             font-weight: 600;
-            color: #B9C3E6;
-            text-decoration: none;
+            font-size: 1.5rem;
+            background: linear-gradient(135deg, #c0e0ff, #7aa2f7);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            letter-spacing: -0.3px;
+        }
+
+        .sidebar-header p {
+            font-size: 0.75rem;
+            color: #8b92a5;
+            margin-top: 0.3rem;
+        }
+
+        /* Navigation menu */
+        .nav-menu {
+            padding: 1rem 0 2rem 0;
+        }
+
+        .nav-item {
+            margin: 0.25rem 0;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.7rem 1.5rem;
+            color: #cbd5e6;
+            font-weight: 500;
+            font-size: 0.95rem;
             transition: all 0.2s;
             cursor: pointer;
-            font-size: 0.9rem;
-            white-space: nowrap;
-        }
-        .nav-link:hover, .nav-link.active {
-            background: #1B2133;
-            color: white;
-        }
-        .nav-link.active {
-            border-bottom: 2px solid #6D8AFF;
-        }
-        .nav-item.has-submenu > .nav-link::after {
-            content: " ▼";
-            font-size: 0.7rem;
-        }
-        .submenu {
-            position: absolute;
-            top: 100%;
-            left: 0;
-            background: #151C2A;
-            backdrop-filter: blur(12px);
-            border: 1px solid #2E3852;
-            border-radius: 20px;
-            min-width: 260px;
-            padding: 0.6rem 0;
-            flex-direction: column;
-            z-index: 200;
-            box-shadow: 0 15px 30px rgba(0,0,0,0.6);
-            display: none;
-        }
-        .submenu.open {
-            display: flex;
-        }
-        .submenu a {
-            padding: 0.7rem 1.3rem;
-            color: #CCD6F6;
-            text-decoration: none;
-            font-size: 0.85rem;
-            transition: 0.1s;
-            display: block;
-            cursor: pointer;
-        }
-        .submenu a:hover, .submenu a:active {
-            background: #253049;
-            color: white;
+            border-left: 3px solid transparent;
         }
 
-        .main-content {
-            display: flex;
-            flex: 1;
-            padding: 2rem;
-            gap: 2rem;
-            flex-wrap: wrap;
-        }
-        .course-section {
-            flex: 2.5;
-            min-width: 280px;
-            background: #0F121D;
-            border-radius: 32px;
-            border: 1px solid #252D42;
-            padding: 1.8rem;
-        }
-        .quiz-panel {
-            flex: 1.3;
-            min-width: 300px;
-            background: #0B0E18;
-            border-radius: 32px;
-            border: 1px solid #29304A;
-            padding: 1.5rem;
-            height: fit-content;
-            position: sticky;
-            top: 100px;
-        }
-        .section-title {
-            font-size: 1.8rem;
-            font-weight: 700;
-            margin-bottom: 0.75rem;
-            border-left: 5px solid #6D8AFF;
-            padding-left: 1rem;
-            color: #EAF0FF;
-        }
-        .content-card {
-            margin-top: 1rem;
-            background: #111520;
-            border-radius: 24px;
-            padding: 1.4rem;
-            border: 1px solid #252E46;
-        }
-        .glossary-term {
-            margin: 0.9rem 0;
-            border-bottom: 1px dashed #2C3452;
-            padding-bottom: 0.6rem;
-        }
-        .glossary-term strong {
-            color: #9BBEFF;
-            font-size: 1.05rem;
-        }
-        button {
-            background: #2D3555;
-            border: none;
+        .nav-link:hover {
+            background: #1e222b;
             color: white;
-            padding: 0.7rem 1.4rem;
-            border-radius: 40px;
+            border-left-color: #7aa2f7;
+        }
+
+        .nav-link.active {
+            background: #1a1e28;
+            color: white;
+            border-left-color: #7aa2f7;
             font-weight: 600;
+        }
+
+        .submenu {
+            margin-left: 2.2rem;
+            display: none;
+            list-style: none;
+        }
+
+        .submenu.open {
+            display: block;
+        }
+
+        .submenu li {
+            margin: 0.3rem 0;
+        }
+
+        .submenu-link {
+            display: block;
+            padding: 0.4rem 1rem;
+            font-size: 0.85rem;
+            color: #9aa3b9;
             cursor: pointer;
-            transition: 0.2s;
-            font-size: 0.9rem;
+            border-radius: 6px;
+            transition: 0.15s;
         }
-        button:hover, button:active {
-            background: #4A5A8C;
-            transform: scale(0.98);
+
+        .submenu-link:hover, .submenu-link.active-sub {
+            background: #262c38;
+            color: #e0e7ff;
         }
-        .quiz-question {
-            background: #121724;
-            padding: 1.1rem;
+
+        /* MAIN CONTENT */
+        .main-content {
+            flex: 1;
+            padding: 2rem 2.5rem;
+            max-width: calc(100% - 280px);
+            background: #0c0f13;
+        }
+
+        .hero {
+            margin-bottom: 2rem;
+        }
+
+        .hero h1 {
+            font-size: 2rem;
+            font-weight: 600;
+            background: linear-gradient(135deg, #ffffff, #b9c7ff);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+
+        .hero p {
+            color: #9ca3b5;
+            margin-top: 0.5rem;
+        }
+
+        .card-module {
+            background: #12161c;
             border-radius: 24px;
+            padding: 1.8rem;
+            margin-bottom: 2rem;
+            border: 1px solid #282e38;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+        }
+
+        .section-title {
+            font-size: 1.6rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            border-left: 4px solid #7aa2f7;
+            padding-left: 1rem;
+        }
+
+        .course-content {
+            font-size: 1rem;
+            color: #dfe6f0;
+        }
+
+        .course-content h3 {
+            margin: 1.2rem 0 0.5rem;
+            color: #cbdffc;
+        }
+
+        .course-content p {
+            margin-bottom: 0.8rem;
+        }
+
+        .course-content ul {
+            margin-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        /* QUIZ STYLES */
+        .quiz-area {
+            margin-top: 2rem;
+            background: #0e1219;
+            border-radius: 20px;
+            padding: 1.5rem;
+            border: 1px solid #29303c;
+        }
+
+        .quiz-question {
+            font-weight: 600;
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+
+        .quiz-options {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
             margin: 1rem 0;
         }
+
         .quiz-option {
-            display: block;
-            margin: 0.7rem 0;
-            background: #1A2132;
-            padding: 0.6rem 1rem;
-            border-radius: 50px;
+            background: #1a1f28;
+            padding: 0.7rem 1rem;
+            border-radius: 14px;
             cursor: pointer;
             transition: 0.1s;
+            border: 1px solid #2d343f;
         }
-        .quiz-option.selected {
-            background: #3F51B5;
-            box-shadow: 0 0 0 2px #7B9AFF;
+
+        .quiz-option:hover {
+            background: #252c38;
+            border-color: #5e7bc2;
         }
-        .feedback {
+
+        .quiz-feedback {
+            margin-top: 1rem;
+            font-weight: 500;
+        }
+
+        .quiz-next {
+            background: #2d3e6e;
+            border: none;
+            padding: 0.6rem 1.4rem;
+            border-radius: 40px;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
             margin-top: 0.8rem;
-            padding: 0.7rem;
-            border-radius: 20px;
-            font-size: 0.85rem;
+            transition: 0.15s;
         }
-        .correct-feedback { background: #1B3A2A; color: #B9FFD6; border-left: 4px solid #6FCF97; }
-        .wrong-feedback { background: #3A242C; color: #FFB7B7; border-left: 4px solid #E06C75; }
-        hr { border-color: #293153; margin: 1.2rem 0; }
-        .badge {
-            background: #1F263F;
-            padding: 0.2rem 0.8rem;
-            border-radius: 30px;
+
+        .quiz-next:hover {
+            background: #3f55a0;
+        }
+
+        hr {
+            border-color: #252b33;
+            margin: 1rem 0;
+        }
+
+        /* responsive */
+        @media (max-width: 780px) {
+            .sidebar {
+                width: 240px;
+            }
+            .main-content {
+                padding: 1.5rem;
+            }
+        }
+        @media (max-width: 650px) {
+            .app-container {
+                flex-direction: column;
+            }
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+            }
+            .main-content {
+                max-width: 100%;
+            }
+        }
+
+        .badge-chapter {
+            background: #1e2a3e;
             font-size: 0.7rem;
-            color: #BACAFF;
-        }
-        @media (max-width: 850px) {
-            .main-content { flex-direction: column; }
-            .quiz-panel { position: static; top: auto; }
-            .nav-link { padding: 0.7rem 1rem; font-size: 0.85rem; }
-            .header h1 { font-size: 1.4rem; }
-            .header { padding: 0.8rem 1rem; }
-            .section-title { font-size: 1.4rem; }
+            padding: 0.2rem 0.6rem;
+            border-radius: 20px;
+            color: #9ac7ff;
         }
         footer {
+            margin-top: 3rem;
             text-align: center;
-            padding: 1.2rem;
-            font-size: 0.7rem;
-            border-top: 1px solid #20263B;
-            color: #67759E;
+            font-size: 0.75rem;
+            color: #5f6a80;
         }
     </style>
 </head>
 <body>
 <div class="app-container">
-    <div class="header">
-        <h1>📘 ISTQB® CTFL v4.0 · Testeur certifié</h1>
-        <p>Syllabus officiel + Glossaire + Quiz intelligents — préparation complète</p>
-    </div>
-
-    <div class="nav-bar">
-        <ul class="nav-menu">
-            <li class="nav-item has-submenu">
-                <a class="nav-link" data-section="syllabus">📖 Syllabus</a>
-                <div class="submenu">
-                    <a data-sub="chap1">1. Fondamentaux & principes</a>
-                    <a data-sub="chap2">2. Cycle de vie & DevOps</a>
-                    <a data-sub="chap3">3. Test statique (revues)</a>
-                    <a data-sub="chap4">4. Techniques de test</a>
-                    <a data-sub="chap5">5. Gestion & risques</a>
-                    <a data-sub="chap6">6. Outils & automatisation</a>
-                </div>
-            </li>
-            <li class="nav-item"><a class="nav-link" data-section="glossary">📚 Glossaire</a></li>
-            <li class="nav-item"><a class="nav-link" data-section="quizzone">🎯 Quiz</a></li>
-            <li class="nav-item"><a class="nav-link" data-section="resources">🧠 Méthodo</a></li>
-        </ul>
-    </div>
-
-    <div class="main-content">
-        <div id="dynamicContent" class="course-section">
-            <div class="content-card">
-                <h2 class="section-title">Bienvenue</h2>
-                <p>Module complet : principes, niveaux de test, boîte noire (partitionnement, valeurs limites, tables), boîte blanche, tests exploratoires, gestion des risques.</p>
-                <button id="randomQuizBtn" style="background:#2D4070; margin-top: 1rem;">🎲 Quiz aléatoire</button>
-            </div>
+    <!-- SIDEBAR MENU -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <h2>ISTQB® Prep</h2>
+            <p>Niveau Fondation v4.0 · Syllabus officiel</p>
         </div>
-
-        <div class="quiz-panel" id="quizPanel">
-            <h3>🧠 Quiz intelligent</h3>
-            <div id="quizArea">
-                <p>Sélectionnez un thème</p>
-                <div style="margin-top: 12px;">
-                    <select id="chapterSelect" style="background:#191F30; color:#E2E8F0; padding:0.6rem; border-radius:40px; border:1px solid #334155; width:100%;">
-                        <option value="chap1">Chapitre 1 - Fondamentaux</option>
-                        <option value="chap2">Chapitre 2 - Cycle de vie</option>
-                        <option value="chap3">Chapitre 3 - Test statique</option>
-                        <option value="chap4">Chapitre 4 - Techniques</option>
-                        <option value="chap5">Chapitre 5 - Gestion/risques</option>
-                        <option value="chap6">Chapitre 6 - Outils</option>
-                        <option value="glossary">Glossaire</option>
-                    </select>
-                    <button id="launchQuiz" style="margin-top: 12px; width:100%;">🚀 Lancer le quiz</button>
-                </div>
-                <div id="quizContainer" style="margin-top: 1.5rem;"></div>
-            </div>
+        <div class="nav-menu" id="navMenu">
+            <!-- Les éléments seront générés dynamiquement via JS mais on structure en HTML statique pour maintenir clarté -->
         </div>
-    </div>
-    <footer>Sources : Syllabus ISTQB CTFL v4.0, Glossaire CFTL/ISTQB — Compatible ordinateur & mobile</footer>
+    </aside>
+
+    <main class="main-content" id="mainContent">
+        <div class="hero">
+            <h1>Certified Tester Foundation Level</h1>
+            <p>Maîtrisez les fondamentaux des tests logiciels · Quiz interactifs & méthodologie ISTQB</p>
+        </div>
+        <div id="dynamicLesson"></div>
+        <footer>© 2025 ISTQB e-Learning — Syllabus CTFL 4.0, glossaire officiel & approche pédagogique. Questions aléatoires par chapitre.</footer>
+    </main>
 </div>
 
 <script>
-    // ==================== DONNÉES ENRICHIES ====================
-    const syllabusData = {
-        chap1: { 
-            title: "1. Fondamentaux des tests", 
-            content: `<strong>🎯 Objectifs du test :</strong> évaluer les produits, provoquer des défaillances, réduire les risques, vérifier les exigences, validation utilisateur.<br><br>
-                      <strong>📌 Les 7 principes :</strong><br>
-                      1. Le test montre la présence de défauts, pas l'absence.<br>
-                      2. Tests exhaustifs impossibles (sauf cas triviaux).<br>
-                      3. Tester tôt économise temps et argent (shift-left).<br>
-                      4. Regroupement des défauts (principe de Pareto 80/20).<br>
-                      5. Usure des tests (renouveler les cas régulièrement).<br>
-                      6. Le test dépend du contexte (Agile, séquentiel...).<br>
-                      7. Illusion d'absence de défaut : valider les besoins utilisateur.<br><br>
-                      <strong>📋 Activités de test :</strong> planification, analyse, conception, implémentation, exécution, clôture.<br>
-                      <strong>🔍 Indépendance :</strong> avantages (angles différents) / inconvénients (friction possible).`
-        },
-        chap2: { 
-            title: "2. Tester tout au long du cycle de vie", 
-            content: `<strong>🔄 Modèles SDLC :</strong> séquentiel (V-model), itératif, Agile. DevOps favorise CI/CD et feedback rapide. Shift-left = tests plus tôt.<br><br>
-                      <strong>📊 Niveaux de test :</strong><br>
-                      - Composant (unitaire) : logique interne<br>
-                      - Intégration composants : interfaces entre composants<br>
-                      - Système : comportement global, fonctionnel et non-fonctionnel<br>
-                      - Intégration système : interfaces avec systèmes externes<br>
-                      - Acceptation : validation métier (UAT, alpha/beta)<br><br>
-                      <strong>🧪 Types de test :</strong> fonctionnel, non-fonctionnel (performance, sécurité, utilisabilité, fiabilité), boîte noire (spécifications), boîte blanche (structure)<br>
-                      <strong>✅ Confirmation vs Régression :</strong> confirmation vérifie correction ; régression évite effets secondaires.`
-        },
-        chap3: { 
-            title: "3. Test statique & revues", 
-            content: `<strong>📄 Test statique :</strong> revues manuelles + analyse statique (outils). Détecte défauts précoces (exigences ambiguës, code inaccessible).<br><br>
-                      <strong>💡 Valeur :</strong> coût moindre, trouve défauts non détectables en dynamique.<br><br>
-                      <strong>🔎 Types de revues :</strong><br>
-                      - Informelle : processus non défini<br>
-                      - Relecture technique : menée par l'auteur<br>
-                      - Revue technique : par experts techniques<br>
-                      - Inspection : la plus formelle, avec métriques<br><br>
-                      <strong>👥 Rôles :</strong> manager, auteur, modérateur, scribe, réviseur.`
-        },
-        chap4: { 
-            title: "4. Techniques de test (analyse & conception)", 
-            content: `<strong>🖤 Boîte noire (spécifications) :</strong><br>
-                      - Partitions d'équivalence : diviser données en classes valides/invalides<br>
-                      - Analyse des valeurs limites (2 ou 3 valeurs) : tester frontières<br>
-                      - Tables de décision : combinaisons conditions → actions<br>
-                      - Tests de transition d'état : états, événements, transitions<br><br>
-                      <strong>🤍 Boîte blanche (structure) :</strong><br>
-                      - Test des instructions (couverture = % instructions exécutées)<br>
-                      - Test des branches (couverture = % branches prises)<br>
-                      La couverture branches implique couverture instructions<br><br>
-                      <strong>🧠 Basées sur l'expérience :</strong> estimation d'erreurs, test exploratoire, test basé sur checklists<br>
-                      <strong>🤝 Collaboration :</strong> User Stories (3C, INVEST), critères d'acceptation (Given/When/Then), ATDD`
-        },
-        chap5: { 
-            title: "5. Gestion des tests", 
-            content: `<strong>📋 Plan de test :</strong> périmètre, ressources, approche, critères d'entrée/sortie<br>
-                      <strong>📌 Techniques d'estimation :</strong> Delphi, trois points (optimiste, probable, pessimiste), extrapolation<br><br>
-                      <strong>🔺 Gestion des risques :</strong><br>
-                      - Risque produit : affecte la qualité (performance, sécurité)<br>
-                      - Risque projet : affecte la gestion (délais, budget, ressources)<br>
-                      - Niveau de risque = Probabilité × Impact<br><br>
-                      <strong>🐞 Gestion des défauts :</strong> rapport de défaut (ID, sévérité, priorité, étapes de reproduction)<br>
-                      <strong>📊 Métriques :</strong> densité de défauts, couverture, progression`
-        },
-        chap6: { 
-            title: "6. Outils de test & automatisation", 
-            content: `<strong>🛠️ Catégories d'outils :</strong><br>
-                      - Gestion : tests, défauts, configuration<br>
-                      - Test statique : analyse de code, revues<br>
-                      - Conception/génération : données de test<br>
-                      - Exécution/couverture : tests automatisés<br>
-                      - Non-fonctionnels : performance, sécurité<br>
-                      - DevOps : CI/CD, collaboration<br><br>
-                      <strong>✅ Avantages :</strong> réduction tâches répétitives, cohérence, objectivité, rapidité<br><br>
-                      <strong>⚠️ Risques :</strong> attentes irréalistes, coûts maintenance, incompatibilité, dépendance fournisseur`
-        }
-    };
-
-    const glossaryTerms = [
-        {term: "Critère d'acceptation", def: "Conditions qu'un composant/système doit satisfaire pour être accepté par l'utilisateur/client."},
-        {term: "Test d'acceptation", def: "Test formel centré sur besoins utilisateur, processus métier et critères d'acceptation."},
-        {term: "Analyse des valeurs limites (BVA)", def: "Technique boîte noire testant les frontières des partitions d'équivalence."},
-        {term: "Partition d'équivalence", def: "Sous-ensemble d'entrées/sorties dont le comportement est supposé identique."},
-        {term: "Test de confirmation (re-test)", def: "Vérifie qu'un défaut a été corrigé avec succès."},
-        {term: "Test de régression", def: "Vérifie l'absence d'effets négatifs après une modification."},
-        {term: "Inspection", def: "Revue la plus formelle, avec collecte de métriques, rôles définis."},
-        {term: "Test exploratoire", def: "Conception, exécution et évaluation simultanées, basées sur l'expérience."},
-        {term: "ATDD", def: "Acceptation Test-Driven Development, tests créés avant implémentation."},
-        {term: "Shift-left", def: "Pratique consistant à effectuer les tests plus tôt dans le cycle de vie."},
-        {term: "Risque produit", def: "Risque affectant la qualité du logiciel (ex: sécurité, performance)."},
-        {term: "Risque projet", def: "Risque lié à la gestion du projet (délais, ressources, budget)."},
-        {term: "Traçabilité", def: "Capacité à lier exigences, conditions, cas de test, résultats et défauts."},
-        {term: "Couverture des instructions", def: "Pourcentage d'instructions exécutables exécutées par les tests."},
-        {term: "Couverture des branches", def: "Pourcentage de branches (décisions) exécutées."},
-        {term: "Table de décision", def: "Tableau montrant combinaisons de conditions et actions résultantes."},
-        {term: "Pyramide des tests", def: "Modèle recommandant nombreux tests unitaires, moins de tests d'interface."}
+    // ********** DONNÉES COMPLÈTES : 6 CHAPITRES avec contenu dense inspiré des PDF **********
+    const chapters = [
+        { id: "ch1", title: "Fondamentaux des tests", duration: "180 min", 
+          content: `<h3>Objectifs du test & concepts clés</h3>
+                    <p>Le test logiciel évalue la qualité et réduit les risques de défaillance. Objectifs typiques : évaluer les produits, provoquer des défaillances, vérifier les exigences, renforcer la confiance. Différence essentielle : tester (détecter) vs déboguer (analyser/corriger).</p>
+                    <h3>Pourquoi tester ?</h3>
+                    <p>Contribue au succès du projet, identifie les défauts tôt (principe shift-left), et assure la conformité. Erreur humaine → défaut → défaillance. Les causes racines permettent d'éviter la récurrence.</p>
+                    <h3>7 Principes du test</h3>
+                    <ul><li>Présence de défauts (pas d'absence)</li><li>Tests exhaustifs impossibles</li><li>Tester tôt économise temps/argent</li><li>Regroupement des défauts</li><li>Usure des tests</li><li>Contexte dépendant</li><li>Illusion d'absence de défaut (validation nécessaire)</li></ul>
+                    <p><strong>Activités de test :</strong> planification, pilotage/contrôle, analyse, conception, implémentation, exécution, clôture. Testware : plans, cas de test, scripts, données. Indépendance du test : avantages (nouveaux angles) et inconvénients (isolation).</p>`,
+          keywords: ["test", "défaut", "validation", "vérification", "qualité"],
+          quizBank: [
+            { q: "Quel est l’un des objectifs principaux du test logiciel ?", options: ["Prouver l'absence de défauts", "Réduire le niveau de risque et évaluer la qualité", "Garantir qu'aucune défaillance n'arrivera en production", "Exécuter uniquement des tests statiques"], correct: 1, explanation: "Le test ne peut pas prouver l'absence de défauts mais réduit les risques et évalue la qualité (section 1.1.1)." },
+            { q: "Selon les 7 principes, lequel est vrai ?", options: ["Le test exhaustif est réalisable pour les petites applications", "Les mêmes tests répétés deviennent plus efficaces", "Tester tôt permet d'économiser du temps et de l'argent", "Les défauts sont uniformément répartis"], correct: 2, explanation: "Principe : Tester tôt économise temps/argent (Boehm)." },
+            { q: "Quelle est la différence entre test et débogage ?", options: ["Le test dynamique provoque des défaillances, le débogage trouve et corrige les causes", "Le débogage est une activité de test statique", "Les tests et le débogage sont identiques", "Le test ne nécessite jamais d'exécution"], correct: 0, explanation: "Le test dynamique déclenche des défaillances ; le débogage analyse/corrige." }
+          ] },
+        { id: "ch2", title: "Tests tout au long du cycle de vie", duration: "130 min",
+          content: `<h3>Impact du SDLC sur les tests</h3>
+                    <p>Modèles séquentiels (V, cascade) vs itératifs/incrémentaux (Agile, Scrum). DevOps favorise l'intégration continue, livraison continue et tests automatisés. Shift-left : tester plus tôt (revues, tests unitaires avant code). Rétrospectives = amélioration continue.</p>
+                    <h3>Niveaux de test</h3>
+                    <ul><li><strong>Tests de composants</strong> (unitaires)</li><li><strong>Tests d'intégration de composants</li>
+                    <li><strong>Tests système</strong> (comportement global)</li>
+                    <li><strong>Tests d'intégration système</strong> (interfaces externes)</li>
+                    <li><strong>Tests d'acceptation</strong> (UAT, opérationnels, alpha/beta)</li></ul>
+                    <h3>Types de test : fonctionnel / non-fonctionnel (performance, sécurité, utilisabilité) ; boîte noire / boîte blanche.</h3>
+                    <p>Tests de confirmation (vérifient correction) et tests de régression (évitent effets collatéraux). Maintenance testing : changements correctifs, évolutifs, environnementaux.</p>`,
+          quizBank: [
+            { q: "Quel niveau de test vise à vérifier les interfaces entre composants ?", options: ["Test système", "Test d'intégration de composants", "Test d'acceptation", "Test de composants"], correct: 1, explanation: "L'intégration de composants teste les interactions et interfaces." },
+            { q: "Que signifie l'approche 'shift-left' ?", options: ["Réduire les tests en fin de projet", "Effectuer les tests plus tôt dans le cycle de vie", "Automatiser tous les tests fonctionnels", "Déplacer les testeurs vers la gauche de l'équipe"], correct: 1, explanation: "Shift-left = tests précoces pour détecter défauts tôt (section 2.1.5)." },
+            { q: "Quel type de test vérifie qu'une correction n'a pas introduit de nouveaux défauts ?", options: ["Test de confirmation", "Test de régression", "Test non fonctionnel", "Test d'acceptation"], correct: 1, explanation: "La régression confirme l'absence d'effets négatifs après changement." }
+          ] },
+        { id: "ch3", title: "Test statique", duration: "80 min",
+          content: `<h3>Bases du test statique : revues et analyses sans exécution</h3>
+                    <p>Valeur : détection précoce des défauts (exigences, conception, code inaccessible). Complémentaire au test dynamique. Types de revues : informelles, relecture technique, revue technique, inspection. Processus de revue : planification, lancement, revue individuelle, communication/analyse, correction & rapport.</p>
+                    <p>Rôles : modérateur, auteur, scribe, réviseur, manager. Facteurs de succès : objectifs clairs, petits groupes, feedback constructif, support management.</p>`,
+          quizBank: [
+            { q: "Le test statique inclut :", options: ["Exécution du code avec données", "Revues et analyse statique", "Tests de performance uniquement", "Tests de régression"], correct: 1, explanation: "Le test statique repose sur revues et analyse outillée, pas d'exécution." },
+            { q: "Quel type de revue est le plus formel et vise à trouver un maximum d'anomalies ?", options: ["Revue informelle", "Relecture technique", "Inspection", "Revue ad-hoc"], correct: 2, explanation: "L'inspection est le type le plus formel avec collecte de métriques." }
+          ] },
+        { id: "ch4", title: "Analyse et conception des tests", duration: "390 min",
+          content: `<h3>Techniques boîte noire :</h3>
+                    <ul><li>Partitions d'équivalence</li><li>Analyse des valeurs limites (2 et 3 valeurs)</li><li>Tables de décision</li><li>Tests de transition d'état</li></ul>
+                    <h3>Boîte blanche :</h3>
+                    <p>Test des instructions et couverture, test des branches. Valeur : mesure objective de la couverture, détection d'omissions.</p>
+                    <h3>Basées sur l'expérience : estimation d'erreurs, test exploratoire, test basé sur checklists.</h3>
+                    <p>Approches collaboratives : User Stories (3C), critères d'acceptation, ATDD (développement piloté par les tests d'acceptation).</p>`,
+          quizBank: [
+            { q: "Quelle technique de test boîte noire est la plus adaptée pour tester une plage de valeurs avec des frontières ?", options: ["Partition d'équivalence", "Analyse des valeurs limites", "Table de décision", "Transition d'état"], correct: 1, explanation: "BVA cible les limites des partitions." },
+            { q: "La couverture des branches est de 100% : que cela signifie-t-il ?", options: ["Toutes les instructions sont couvertes", "Tous les résultats de décision et branches sont exercés", "Tous les chemins sont testés", "Les tests sont exhaustifs"], correct: 1, explanation: "La couverture des branches inclut toutes les branches conditionnelles/inconditionnelles." }
+          ] },
+        { id: "ch5", title: "Gestion des activités de test", duration: "335 min",
+          content: `<h3>Planification, estimation (trois points, Wideband Delphi). Critères d'entrée/sortie, pyramide des tests, quadrants de tests (Agile).</h3>
+                    <p><strong>Gestion des risques</strong> : risques produit (qualité) et risques projet (organisation). Analyse et contrôle des risques, tests basés sur les risques. Niveau de risque = probabilité × impact.</p>
+                    <p>Métriques de test, rapports d'avancement, clôture des tests. Gestion de configuration : identification et contrôle des versions du testware. Gestion des défauts : rapport de défaut (sévérité, priorité, statut).</p>`,
+          quizBank: [
+            { q: "Qu'est-ce qu'un risque produit ?", options: ["Retard dans la livraison d'un environnement", "Défaut de performance du logiciel", "Manque de compétences de l'équipe", "Changement de périmètre"], correct: 1, explanation: "Risque produit lié aux caractéristiques qualité (ex: performance)." },
+            { q: "Dans un rapport de défaut, quelle information est essentielle ?", options: ["Nom du développeur", "Description pour reproduction et résultat attendu/réel", "Coût estimé", "Temps de build"], correct: 1, explanation: "Section 5.5 : contexte, étapes, résultats attendus/réels." }
+          ] },
+        { id: "ch6", title: "Outils de test", duration: "20 min",
+          content: `<h3>Outils de gestion, tests statiques, conception, exécution, non-fonctionnels, DevOps, collaboration.</h3>
+                    <p>Avantages : gain de temps, prévention erreurs humaines, objectivité, feedback rapide. Risques : attentes irréalistes, maintenance élevée, dépendance fournisseur, incompatibilité.</p>
+                    <p>Automatisation des tests : essentielle pour régression, CI/CD.</p>`,
+          quizBank: [
+            { q: "Lequel est un avantage de l'automatisation des tests ?", options: ["Élimine totalement les tests manuels", "Réduction des erreurs humaines et feedback rapide", "Garantit l'absence de tout défaut", "Diminue le besoin de compétences techniques"], correct: 1, explanation: "L'automatisation augmente la cohérence et accélère le feedback." }
+          ] }
     ];
 
-    const questionBank = {
-        chap1: [
-            {text: "Selon les principes ISTQB, que peut-on affirmer ?", options: ["Les tests exhaustifs sont toujours possibles", "Le test montre la présence de défauts", "Tester tard est plus rentable", "Le test prouve l'absence d'erreur"], correct: 1, explanation: "Principe 1 : les tests montrent des défauts, ne prouvent pas leur absence."},
-            {text: "Lequel est un objectif de test ?", options: ["Corriger les défauts", "Réduire le niveau de risque", "Écrire le code source", "Gérer la configuration"], correct: 1, explanation: "Réduire le risque de qualité insuffisante est un objectif clé."},
-            {text: "Quel principe évoque le regroupement des défauts ?", options: ["Pareto (80/20)", "Usure des tests", "Exhaustivité impossible", "Test précoce"], correct: 0, explanation: "La plupart des défauts se trouvent dans un petit nombre de modules."}
-        ],
-        chap2: [
-            {text: "À quel niveau teste-t-on les interactions entre systèmes externes ?", options: ["Test d'intégration système", "Test de composant", "Test d'acceptation", "Test de régression"], correct: 0, explanation: "L'intégration système vérifie les interfaces avec des systèmes externes."},
-            {text: "Qu'est-ce que DevOps apporte aux tests ?", options: ["Réduction de l'automatisation", "Feedback rapide et CI/CD", "Tests uniquement manuels", "Suppression des tests"], correct: 1, explanation: "DevOps favorise l'intégration continue, livraison continue."},
-            {text: "Le test de confirmation (re-test) est exécuté pour :", options: ["Valider une nouvelle fonction", "Vérifier la correction d'un défaut", "Mesurer la performance", "Trouver des régressions"], correct: 1, explanation: "Confirmation = s'assurer qu'un défaut a bien été corrigé."}
-        ],
-        chap3: [
-            {text: "Quel type de revue est le plus formel ?", options: ["Revue informelle", "Relecture technique", "Inspection", "Walkthrough"], correct: 2, explanation: "L'inspection suit un processus rigoureux avec rôles définis."},
-            {text: "Lequel de ces défauts est plus facile à trouver par test statique ?", options: ["Temps de réponse lent", "Code inaccessible", "Défaillance mémoire", "Erreur d'arrondi"], correct: 1, explanation: "Code inaccessible détectable via analyse statique sans exécution."}
-        ],
-        chap4: [
-            {text: "Quelle technique est adaptée pour les règles métier complexes ?", options: ["Partitions d'équivalence", "Table de décision", "Test des branches", "Estimation d'erreur"], correct: 1, explanation: "Tables de décision = combinaisons de conditions / actions."},
-            {text: "La couverture des branches à 100% implique :", options: ["Couverture instructions 100%", "Test exhaustif", "Pas de défauts", "Couverture des exigences"], correct: 0, explanation: "Si toutes les branches sont exécutées, toutes les instructions le sont aussi."}
-        ],
-        chap5: [
-            {text: "Qu'est-ce qu'un risque produit ?", options: ["Retard dans la livraison", "Mauvaise performance du logiciel", "Dépassement de budget", "Conflits dans l'équipe"], correct: 1, explanation: "Risque produit affecte directement la qualité du système."},
-            {text: "Dans un rapport de défaut, la 'priorité' indique :", options: ["Gravité technique", "Ordre de correction (urgence métier)", "Impact sur les utilisateurs", "Type d'anomalie"], correct: 1, explanation: "La priorité définit l'urgence de correction."}
-        ],
-        chap6: [
-            {text: "Avantage de l'automatisation des tests ?", options: ["Élimine les tests manuels", "Répétabilité et cohérence", "Aucun coût de maintenance", "Remplace l'analyse"], correct: 1, explanation: "Automatisation = exécution fiable et répétable."},
-            {text: "Risque majeur d'un outil de test :", options: ["Incompatibilité technique", "Amélioration immédiate", "Réduction du temps total", "Test exploratoire facilité"], correct: 0, explanation: "Incompatibilité avec plateforme ou environnement."}
-        ]
-    };
-
-    const glossaryQuiz = [
-        {text: "Que signifie 'Shift-left' ?", options: ["Tester après la production", "Déplacer les tests vers les phases amont", "Réduire les tests", "Automatiser à 100%"], correct: 1, explanation: "Shift-left = commencer les tests plus tôt (revues, tests unitaires précoces)."},
-        {text: "Que mesure la couverture des branches ?", options: ["% instructions exécutées", "% de décisions exécutées", "% exigences couvertes", "% défauts corrigés"], correct: 1, explanation: "Couverture des branches = proportion de branches parcourues."}
-    ];
-
-    // Compléter les banques si besoin
-    for(let i in questionBank) {
-        while(questionBank[i].length < 3) questionBank[i].push(questionBank[i][0]);
-    }
-
-    let currentOpenMenu = null;
-
-    function closeAllMenus() {
-        document.querySelectorAll('.submenu.open').forEach(m => m.classList.remove('open'));
-        currentOpenMenu = null;
-    }
-
-    function toggleMenu() {
-        const submenu = document.querySelector('.nav-item.has-submenu .submenu');
-        if (!submenu) return;
-        if (submenu.classList.contains('open')) {
-            submenu.classList.remove('open');
-            currentOpenMenu = null;
-        } else {
-            closeAllMenus();
-            submenu.classList.add('open');
-            currentOpenMenu = 'syllabus';
-        }
-    }
-
-    function loadSection(sectionId, sub = null) {
-        const container = document.getElementById('dynamicContent');
-        if (sectionId === 'syllabus' && sub && syllabusData[sub]) {
-            let data = syllabusData[sub];
-            container.innerHTML = `<div class="content-card"><h2 class="section-title">${data.title}</h2><div>${data.content}</div><hr><div class="badge">📘 Syllabus ISTQB CTFL v4.0</div></div>`;
-        } else if (sectionId === 'glossary') {
-            let html = `<div class="content-card"><h2 class="section-title">📖 Glossaire complet</h2>`;
-            glossaryTerms.forEach(g => { html += `<div class="glossary-term"><strong>${g.term}</strong> : ${g.def}</div>`; });
-            container.innerHTML = html + `</div>`;
-        } else if (sectionId === 'quizzone') {
-            container.innerHTML = `<div class="content-card"><h2 class="section-title">🎯 Mode quiz</h2><p>Sélectionnez un thème dans le panneau de droite et lancez le quiz. Les questions sont aléatoires à chaque session.</p><p>💡 Lisez les explications pour ancrer les concepts.</p></div>`;
-        } else if (sectionId === 'resources') {
-            container.innerHTML = `<div class="content-card"><h2 class="section-title">🧠 Méthodologie d'apprentissage</h2><ul style="margin-left:1.5rem"><li>🔁 Lire un chapitre → quiz immédiat → relire les erreurs</li><li>📌 Mémoriser les 7 principes, niveaux de test et techniques BVA</li><li>📊 Réviser le glossaire régulièrement</li><li>⚡ Utiliser le quiz aléatoire pour validation globale</li></ul></div>`;
-        }
-        closeAllMenus();
-    }
-
-    function generateQuiz(chapterId) {
-        let questions = chapterId === 'glossary' ? [...glossaryQuiz] : [...(questionBank[chapterId] || questionBank.chap1)];
-        for (let i = questions.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [questions[i], questions[j]] = [questions[j], questions[i]];
-        }
-        let selected = questions.slice(0, 3);
-        const quizDiv = document.getElementById('quizContainer');
+    // --- CONSTRUCTION MENU DYNAMIQUE avec sous-menus (pour certains chapitres, sous-sections fictives) ---
+    const navContainer = document.getElementById('navMenu');
+    function buildSidebar() {
         let html = '';
-        selected.forEach((q, idx) => {
-            html += `<div class="quiz-question" data-qidx="${idx}"><strong>❓ ${q.text}</strong><br>`;
-            q.options.forEach((opt, optIdx) => {
-                html += `<label class="quiz-option" data-optidx="${optIdx}" data-qidx="${idx}"><input type="radio" name="q${idx}" value="${optIdx}" style="margin-right:8px;"> ${opt}</label>`;
-            });
-            html += `<div class="feedback" id="fb-${idx}"></div></div>`;
+        chapters.forEach((ch, idx) => {
+            const subItems = [
+                { label: "Concepts clés", id: `sub-${ch.id}-key` },
+                { label: "Quiz & révision", id: `sub-${ch.id}-quiz` }
+            ];
+            html += `
+                <div class="nav-item">
+                    <div class="nav-link" data-chapter="${ch.id}">
+                        <span>📘 ${ch.title}</span>
+                        <span style="margin-left:auto; font-size:0.7rem;">${ch.duration}</span>
+                    </div>
+                    <ul class="submenu" id="submenu-${ch.id}">
+                        ${subItems.map(sub => `<li><div class="submenu-link" data-sub="${sub.id}" data-parent="${ch.id}">${sub.label}</div></li>`).join('')}
+                    </ul>
+                </div>
+            `;
         });
-        html += `<button id="submitQuizAnswers" style="background:#3F5185; margin-top:0.5rem;">✔️ Valider les réponses</button>`;
-        quizDiv.innerHTML = html;
+        navContainer.innerHTML = html;
 
-        document.getElementById('submitQuizAnswers')?.addEventListener('click', () => {
-            let score = 0;
-            selected.forEach((q, idx) => {
-                const selectedRadio = document.querySelector(`input[name="q${idx}"]:checked`);
-                const fbDiv = document.getElementById(`fb-${idx}`);
-                if (selectedRadio && parseInt(selectedRadio.value) === q.correct) {
-                    score++;
-                    fbDiv.innerHTML = `✅ Correct ! ${q.explanation || ''}`;
-                    fbDiv.className = "feedback correct-feedback";
-                } else {
-                    fbDiv.innerHTML = `❌ Erreur. Bonne réponse : "${q.options[q.correct]}". ${q.explanation || ''}`;
-                    fbDiv.className = "feedback wrong-feedback";
-                }
+        // Event listeners pour ouvrir/fermer sous-menus
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const chapterId = link.dataset.chapter;
+                const submenu = document.getElementById(`submenu-${chapterId}`);
+                if (submenu) submenu.classList.toggle('open');
+                // charger le contenu par défaut du chapitre (vue synthèse)
+                loadChapterOverview(chapterId);
+                highlightActiveChapter(chapterId);
             });
-            const resultDiv = document.createElement('div');
-            resultDiv.style.marginTop = '1rem';
-            resultDiv.style.fontWeight = 'bold';
-            resultDiv.innerHTML = `🎯 Score : ${score}/${selected.length}`;
-            quizDiv.appendChild(resultDiv);
-            document.getElementById('submitQuizAnswers')?.setAttribute('disabled', 'disabled');
+        });
+        // sous-menu links
+        document.querySelectorAll('.submenu-link').forEach(sub => {
+            sub.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const parentId = sub.dataset.parent;
+                const subType = sub.dataset.sub;
+                if (subType.includes('quiz')) {
+                    loadQuizForChapter(parentId);
+                } else {
+                    loadChapterOverview(parentId);
+                }
+                // highlight submenu
+                document.querySelectorAll('.submenu-link').forEach(s => s.classList.remove('active-sub'));
+                sub.classList.add('active-sub');
+                highlightActiveChapter(parentId);
+            });
         });
     }
 
-    // ==================== ÉVÉNEMENTS ====================
-    // Gestion du clic sur Syllabus (menu principal)
-    document.querySelector('.nav-item.has-submenu > .nav-link').addEventListener('click', (e) => {
-        e.stopPropagation();
-        // Ouvre/ferme le sous-menu
-        toggleMenu();
-        // Charge le premier chapitre par défaut si besoin
-        const currentContent = document.getElementById('dynamicContent').innerHTML;
-        if (currentContent.includes('Bienvenue') || !currentContent.includes('Fondamentaux')) {
-            loadSection('syllabus', 'chap1');
+    function highlightActiveChapter(chapterId) {
+        document.querySelectorAll('.nav-link').forEach(link => {
+            if (link.dataset.chapter === chapterId) link.classList.add('active');
+            else link.classList.remove('active');
+        });
+    }
+
+    // Contenu principal : vue cours (overview)
+    function loadChapterOverview(chapterId) {
+        const chapter = chapters.find(c => c.id === chapterId);
+        if (!chapter) return;
+        const contentHtml = `
+            <div class="card-module">
+                <div class="section-title">${chapter.title} <span class="badge-chapter">${chapter.duration}</span></div>
+                <div class="course-content">
+                    ${chapter.content}
+                </div>
+                <hr />
+                <div style="margin-top:1rem;">
+                    <button class="quiz-next" id="quickQuizBtn">🎯 Lancer un quiz aléatoire (ce chapitre)</button>
+                </div>
+            </div>
+            <div id="quizEmbed" class="quiz-area"></div>
+        `;
+        document.getElementById('dynamicLesson').innerHTML = contentHtml;
+        document.getElementById('quickQuizBtn')?.addEventListener('click', () => loadQuizForChapter(chapterId));
+        // reset quiz area
+        const quizDiv = document.getElementById('quizEmbed');
+        if(quizDiv) quizDiv.innerHTML = `<p style="color:#aaa;">Cliquez sur "Lancer un quiz" ou utilisez le sous-menu "Quiz & révision" pour tester vos connaissances.</p>`;
+    }
+
+    // QUIZ INTELLIGENT ET ALÉATOIRE (tire 3 questions aléatoires du chapitre, mais peut être configuré)
+    let currentQuizQuestions = [];
+    let currentQuizIndex = 0;
+    let currentChapterId = null;
+
+    function loadQuizForChapter(chapterId) {
+        const chapter = chapters.find(c => c.id === chapterId);
+        if (!chapter || !chapter.quizBank || chapter.quizBank.length === 0) {
+            document.getElementById('dynamicLesson').innerHTML += `<div class="quiz-area">⚠️ Aucune question disponible pour ce chapitre.</div>`;
+            return;
         }
-        // Active le lien
-        document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
-        e.target.classList.add('active');
-    });
+        currentChapterId = chapterId;
+        // Sélection aléatoire de 3 questions (ou moins si moins de 3)
+        const bank = [...chapter.quizBank];
+        const shuffled = bank.sort(() => 0.5 - Math.random());
+        currentQuizQuestions = shuffled.slice(0, Math.min(3, bank.length));
+        currentQuizIndex = 0;
+        renderQuizQuestion();
+    }
 
-    // Sous-menu items
-    document.querySelectorAll('.submenu a').forEach(item => {
-        item.addEventListener('click', (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            const sub = item.getAttribute('data-sub');
-            if (sub) loadSection('syllabus', sub);
-            closeAllMenus();
-            document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
-            document.querySelector('.nav-item.has-submenu > .nav-link')?.classList.add('active');
+    function renderQuizQuestion() {
+        const quizContainer = document.getElementById('quizEmbed');
+        if (!quizContainer) return;
+        if (currentQuizIndex >= currentQuizQuestions.length) {
+            quizContainer.innerHTML = `<div style="background:#17212b; padding:1rem; border-radius:20px;">🎉 Félicitations ! Quiz terminé. Votre score est excellent. Relancez un quiz pour réviser.</div>
+                                        <button class="quiz-next" id="restartQuizBtn">🔄 Refaire le quiz (aléatoire)</button>`;
+            const restartBtn = document.getElementById('restartQuizBtn');
+            if(restartBtn) restartBtn.onclick = () => loadQuizForChapter(currentChapterId);
+            return;
+        }
+        const qData = currentQuizQuestions[currentQuizIndex];
+        let optionsHtml = '';
+        qData.options.forEach((opt, idx) => {
+            optionsHtml += `<div class="quiz-option" data-opt-index="${idx}">${String.fromCharCode(65+idx)}. ${opt}</div>`;
         });
-    });
-
-    // Autres onglets
-    document.querySelectorAll('.nav-item:not(.has-submenu) > .nav-link').forEach(link => {
-        link.addEventListener('click', () => {
-            const section = link.getAttribute('data-section');
-            if (section) loadSection(section);
-            closeAllMenus();
-            document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
-            link.classList.add('active');
+        const html = `
+            <div class="quiz-area" style="margin-top:0;">
+                <div class="quiz-question">Question ${currentQuizIndex+1}/${currentQuizQuestions.length} : ${qData.q}</div>
+                <div class="quiz-options" id="quizOptions">${optionsHtml}</div>
+                <div id="quizFeedback" class="quiz-feedback"></div>
+                <button class="quiz-next" id="nextQuizBtn">Question suivante</button>
+            </div>
+        `;
+        quizContainer.innerHTML = html;
+        // Attacher events aux options
+        document.querySelectorAll('.quiz-option').forEach(opt => {
+            opt.addEventListener('click', (e) => {
+                const selectedIdx = parseInt(opt.dataset.optIndex);
+                const isCorrect = (selectedIdx === qData.correct);
+                const feedbackDiv = document.getElementById('quizFeedback');
+                if (isCorrect) {
+                    feedbackDiv.innerHTML = `<span style="color:#6fcf97;">✅ Correct ! ${qData.explanation || ''}</span>`;
+                } else {
+                    const correctLetter = String.fromCharCode(65+qData.correct);
+                    feedbackDiv.innerHTML = `<span style="color:#e67e7e;">❌ Incorrect. Bonne réponse : ${correctLetter}. ${qData.explanation || ''}</span>`;
+                }
+                // Désactiver les options pour éviter double réponse
+                document.querySelectorAll('.quiz-option').forEach(o => o.style.pointerEvents = 'none');
+            });
         });
-    });
+        const nextBtn = document.getElementById('nextQuizBtn');
+        if(nextBtn) nextBtn.onclick = () => {
+            currentQuizIndex++;
+            renderQuizQuestion();
+        };
+    }
 
-    // Quiz
-    document.getElementById('launchQuiz')?.addEventListener('click', () => {
-        const selected = document.getElementById('chapterSelect').value;
-        generateQuiz(selected);
-        loadSection('quizzone');
-        document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
-        document.querySelector('.nav-link[data-section="quizzone"]')?.classList.add('active');
-    });
-    document.getElementById('randomQuizBtn')?.addEventListener('click', () => {
-        const chapters = ['chap1','chap2','chap3','chap4','chap5','chap6','glossary'];
-        const rand = chapters[Math.floor(Math.random() * chapters.length)];
-        document.getElementById('chapterSelect').value = rand;
-        generateQuiz(rand);
-        loadSection('quizzone');
-        document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
-        document.querySelector('.nav-link[data-section="quizzone"]')?.classList.add('active');
-    });
+    // initial load par défaut (chapitre 1)
+    function initApp() {
+        buildSidebar();
+        loadChapterOverview('ch1');
+        // Ouvrir le premier sous-menu pour l'expérience
+        const defaultSub = document.getElementById('submenu-ch1');
+        if(defaultSub) defaultSub.classList.add('open');
+        highlightActiveChapter('ch1');
+    }
 
-    // Fermer menu en cliquant ailleurs
-    document.addEventListener('click', (e) => {
-        if (!e.target.closest('.nav-item')) closeAllMenus();
-    });
-
-    // Chargement initial
-    loadSection('syllabus', 'chap1');
-    generateQuiz('chap1');
+    initApp();
 </script>
 </body>
 </html>
